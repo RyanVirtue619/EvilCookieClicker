@@ -1,0 +1,8 @@
+.cookie:active {
+	transform: scale(0.95);
+}
+
+.cookie {
+	height: 250px;
+	width: 250px;
+}
