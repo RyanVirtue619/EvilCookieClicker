@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.04fba97e.css",
-    "main.js": "/static/js/main.2f94c5d6.js",
-    "static/js/787.27b1d532.chunk.js": "/static/js/787.27b1d532.chunk.js",
-    "static/media/irs-logo.png": "/static/media/irs-logo.04d36760f40c7d2a0dd3.png",
-    "index.html": "/index.html",
-    "main.04fba97e.css.map": "/static/css/main.04fba97e.css.map",
-    "main.2f94c5d6.js.map": "/static/js/main.2f94c5d6.js.map",
-    "787.27b1d532.chunk.js.map": "/static/js/787.27b1d532.chunk.js.map"
+    "main.css": "/EvilCookieClicker/static/css/main.04fba97e.css",
+    "main.js": "/EvilCookieClicker/static/js/main.6c7485ff.js",
+    "static/js/787.27b1d532.chunk.js": "/EvilCookieClicker/static/js/787.27b1d532.chunk.js",
+    "static/media/irs-logo.png": "/EvilCookieClicker/static/media/irs-logo.04d36760f40c7d2a0dd3.png",
+    "index.html": "/EvilCookieClicker/index.html",
+    "main.04fba97e.css.map": "/EvilCookieClicker/static/css/main.04fba97e.css.map",
+    "main.6c7485ff.js.map": "/EvilCookieClicker/static/js/main.6c7485ff.js.map",
+    "787.27b1d532.chunk.js.map": "/EvilCookieClicker/static/js/787.27b1d532.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.04fba97e.css",
-    "static/js/main.2f94c5d6.js"
+    "static/js/main.6c7485ff.js"
   ]
 }
