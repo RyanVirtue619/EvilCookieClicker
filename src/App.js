@@ -5,23 +5,27 @@ import AutoCookie from "./AutoCookie";
 import IRS from "./IRS";
 import { round, BrowserState } from "./CCUtils";
 import "./CookieStore.css";
+import Spinner from "./Spinner";
 
 const shopItems = {
 	AutoCookie: [10, 1, 1.2],
 	Grandma: [150, 5, 1.2],
 	"Cookie Accelerator": [1337, 25, 1.2],
+	"Mr Jaffe": [10000, 125, 1.1],
 };
 
 function App() {
 	// localStorage.clear();
 	const [cookies, setCookies] = BrowserState(0, "cookies");
 	const [data, setData] = BrowserState(
-		{ AutoCookie: 0, Grandma: 0, "Cookie Accelerator": 0 },
+		{ AutoCookie: 0, Grandma: 0, "Cookie Accelerator": 0, "Mr Jaffe": 0 },
 		"data"
 	);
-	const [taxTimer, setTaxTimer] = useState(60);
-	const [taxPercentage, setTaxPercentage] = useState(0.5);
+	const [lastWin, setLastWin] = useState(0);
+	const [taxTimer, setTaxTimer] = useState(0);
+	const [taxPercentage, setTaxPercentage] = useState(0);
 	const [multiBuy, setMultiBuy] = useState(1);
+	const [bet, setBet] = useState(1);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -67,17 +71,31 @@ function App() {
 	return (
 		<div className="App">
 			<IRS taxPerc={taxPercentage} time={taxTimer} />
+
+			<div>{"CPS: " + cps()}</div>
 			<Cookie
 				onClick={() => {
 					setCookies(cookies + 1);
 				}}
 				cookies={cookies}
 			/>
-			<div>{"CPS: " + cps()}</div>
 			<div>{"Cookies: " + round(cookies, 0)}</div>
 			{/* <div onClick={() => console.log(data)}>Log Data</div> */}
-			<div className="store">
-				<div className="store-title">Cookie Store</div>
+			<div className="menu top">
+				<div className="sign-holder">
+					<div className="shop-title">Cookie Store</div>
+				</div>
+				<div className="multi-buy">
+					<input
+						type="number"
+						value={multiBuy}
+						className="multi-buy-num"
+						placeholder={"Enter multi buy value"}
+						onInput={(e) => {
+							setMultiBuy(parseInt(e.target.value || 1));
+						}}
+					/>
+				</div>
 				{Object.keys(shopItems).map((el) => {
 					return (
 						<div
@@ -95,21 +113,71 @@ function App() {
 								}}
 								text={el + ` (${round(getPrice(el), 2)})`}
 							/>
-							<div>{data[el]}</div>
+							<div className="itemcount-holder">
+								<div className="itemcount">{data[el]}</div>
+							</div>
 						</div>
 					);
 				})}
-				<div>
+			</div>
+			<div className="menu">
+				<div className="sign-holder">
+					<div className="shop-title">Casino</div>
+				</div>
+				<div className="bet">
 					<input
 						type="number"
-						placeholder={"Enter multi buy value"}
+						max={cookies}
+						value={round(bet, 0)}
+						className="multi-buy-num"
+						placeholder={"Enter bet value"}
 						onInput={(e) => {
-							setMultiBuy(parseInt(e.target.value || 1));
+							let inp = parseInt(e.target.value);
+							if (inp > cookies) {
+								setBet(cookies);
+							} else {
+								setBet(inp || 1);
+							}
 						}}
 					/>
 				</div>
-			</div>
+				<div className="bet">
+					<div className="multi-buy-num">Last Win: {lastWin}</div>
+				</div>
+				<Spinner
+					onRoll={(i, j, k) => {
+						setCookies(
+							cookies +
+								Math.max(
+									0,
 
+									bet *
+										(Math.pow(
+											1.003,
+											parseInt(i) * 100 +
+												parseInt(j) * 10 +
+												parseInt(k)
+										) -
+											9.93)
+								)
+						);
+						setLastWin(
+							Math.max(
+								0,
+
+								bet *
+									(Math.pow(
+										1.003,
+										parseInt(i) * 100 +
+											parseInt(j) * 10 +
+											parseInt(k)
+									) -
+										9.93)
+							)
+						);
+					}}
+				/>
+			</div>
 			<button
 				onClick={() => {
 					console.log(data);
@@ -120,6 +188,12 @@ function App() {
 			<button
 				onClick={() => {
 					setCookies(0);
+					setData({
+						AutoCookie: 0,
+						Grandma: 0,
+						"Cookie Accelerator": 0,
+						"Mr Jaffe": 0,
+					});
 					localStorage.clear();
 				}}
 			>

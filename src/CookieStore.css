@@ -1,14 +1,68 @@
-.store {
+.menu {
 	display: flex;
 	flex-direction: column;
 	background-color: rgb(229, 229, 229);
-	padding: 10px;
-	border: 1px solid black;
+	padding: 0px 10px 10px 10px;
+	border-bottom: 1px solid black;
 	border-left: 0px solid black;
 	border-right: 0px solid black;
-	margin-top: 15px;
 }
 
+.top {
+	border-top: 1px solid black;
+}
 .store-title {
 	font-size: 30px;
+	text-decoration: underline;
+	background-color: rgb(7, 162, 7);
+}
+
+.multi-buy-num {
+	border: 2px solid black;
+	padding: 4px;
+	height: 30px;
+	font-size: 20px;
+	outline: 0;
+	transition: ease 0.3s;
+}
+
+.sign-holder {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	padding: 10px 0px 0px 0px;
+}
+
+.multi-buy {
+	display: flex;
+	justify-content: right;
+	margin-right: 10px;
+}
+
+.shop-title {
+	font-size: 25px;
+	color: lightgray;
+	padding: 15px 25px;
+	background-color: rgb(106, 63, 45);
+	border: 3px dashed gray;
+}
+
+.itemcount {
+	font-size: 25px;
+}
+
+.itemcount-holder {
+	min-width: 100px;
+	border: 2px dashed black;
+	text-align: center;
+	background-color: white;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: right;
+}
+
+.multi-buy-num:focus {
+	outline: 0;
+	border-color: blue;
 }
