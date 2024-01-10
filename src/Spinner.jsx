@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { wait } from "./CCUtils";
 import "./Slots.css";
 export default function Spinner(props) {
@@ -8,6 +8,7 @@ export default function Spinner(props) {
 	const [rolling, setRolling] = useState(false);
 	const items = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 	const roll = async () => {
+		props.beginRoll();
 		for (let i = 0; i < Math.random() * 25 + 10; i++) {
 			setItem(items[Math.floor(Math.random() * items.length)]);
 			setItem2(items[Math.floor(Math.random() * items.length)]);
@@ -15,8 +16,13 @@ export default function Spinner(props) {
 			await wait(Math.pow(i, 1.25) * 10 + 25);
 		}
 		setRolling(false);
-		props.onRoll(item, item2, item3);
 	};
+
+	useEffect(() => {
+		if (!rolling) {
+			props.onRoll(item, item2, item3);
+		}
+	});
 
 	return (
 		<>
@@ -59,10 +65,10 @@ export default function Spinner(props) {
 			<div className="roller-holder">
 				<div
 					className={!rolling ? "roll rolling" : "roll"}
-					onClick={() => {
+					onClick={async () => {
 						if (!rolling) {
 							setRolling(true);
-							roll();
+							await roll();
 						}
 					}}
 					disabled={rolling}

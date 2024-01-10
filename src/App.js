@@ -15,7 +15,6 @@ const shopItems = {
 };
 
 function App() {
-	// localStorage.clear();
 	const [cookies, setCookies] = BrowserState(0, "cookies");
 	const [data, setData] = BrowserState(
 		{ AutoCookie: 0, Grandma: 0, "Cookie Accelerator": 0, "Mr Jaffe": 0 },
@@ -25,7 +24,7 @@ function App() {
 	const [taxTimer, setTaxTimer] = useState(0);
 	const [taxPercentage, setTaxPercentage] = useState(0);
 	const [multiBuy, setMultiBuy] = useState(1);
-	const [bet, setBet] = useState(1);
+	const [bet, setBet] = useState(0);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -40,6 +39,11 @@ function App() {
 		}, 10);
 		return () => clearInterval(interval);
 	});
+	// useEffect(() => {
+	// 	if (cookies > bet) {
+	// 		setBet(parseInt(cookies));
+	// 	}
+	// }, [cookies, bet]);
 
 	function cps() {
 		let total = 0;
@@ -128,7 +132,6 @@ function App() {
 					<input
 						type="number"
 						max={cookies}
-						value={round(bet, 0)}
 						className="multi-buy-num"
 						placeholder={"Enter bet value"}
 						onInput={(e) => {
@@ -136,35 +139,22 @@ function App() {
 							if (inp > cookies) {
 								setBet(cookies);
 							} else {
-								setBet(inp || 1);
+								setBet(inp > 0 ? inp : 1);
 							}
 						}}
 					/>
 				</div>
 				<div className="bet">
-					<div className="multi-buy-num">Last Win: {lastWin}</div>
+					<div className="last-win-ticker">
+						Last Win: {round(lastWin, 5)}
+					</div>
 				</div>
 				<Spinner
 					onRoll={(i, j, k) => {
-						setCookies(
-							cookies +
-								Math.max(
-									0,
-
-									bet *
-										(Math.pow(
-											1.003,
-											parseInt(i) * 100 +
-												parseInt(j) * 10 +
-												parseInt(k)
-										) -
-											9.93)
-								)
-						);
+						console.log("Rolled", i, j, k);
 						setLastWin(
 							Math.max(
 								0,
-
 								bet *
 									(Math.pow(
 										1.003,
@@ -176,11 +166,16 @@ function App() {
 							)
 						);
 					}}
+					beginRoll={() => {
+						setCookies(cookies - bet);
+					}}
 				/>
 			</div>
 			<button
 				onClick={() => {
-					console.log(data);
+					console.log("Data", data);
+					console.log("Cookies", cookies);
+					console.log("Bet", bet);
 				}}
 			>
 				log

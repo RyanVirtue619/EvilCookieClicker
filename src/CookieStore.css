@@ -11,10 +11,28 @@
 .top {
 	border-top: 1px solid black;
 }
+
+.bet {
+	display: flex;
+	justify-content: center;
+}
+
 .store-title {
 	font-size: 30px;
 	text-decoration: underline;
 	background-color: rgb(7, 162, 7);
+}
+
+.last-win-ticker {
+	border: 2px solid black;
+	padding: 5px 25px;
+	height: 30px;
+	width: fit-content;
+	font-size: 20px;
+	outline: 0;
+	transition: ease 0.3s;
+	line-height: 30px;
+	text-align: center;
 }
 
 .multi-buy-num {
