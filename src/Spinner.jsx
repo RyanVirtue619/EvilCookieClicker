@@ -26,10 +26,21 @@ export default function Spinner(props) {
 		}
 	}, [item, item2, item3, rolling, propRoll]);
 
+	function itemVal() {
+		return (
+			(parseInt(item) * 100 + parseInt(item2) * 10 + parseInt(item)) / 999
+		);
+	}
+
 	return (
 		<>
 			<div className="gambler">
-				<div className="bgslot">
+				<div
+					className="bgslot"
+					style={{
+						backgroundColor: `rgb(${0}, ${255 * itemVal()}, ${0})`,
+					}}
+				>
 					<div className="slot">
 						<div className={"container"}>{item}</div>
 					</div>
