@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/EvilCookieClicker/static/css/main.04fba97e.css",
-    "main.js": "/EvilCookieClicker/static/js/main.6c7485ff.js",
+    "main.css": "/EvilCookieClicker/static/css/main.daa66474.css",
+    "main.js": "/EvilCookieClicker/static/js/main.f45bfd59.js",
     "static/js/787.27b1d532.chunk.js": "/EvilCookieClicker/static/js/787.27b1d532.chunk.js",
     "static/media/irs-logo.png": "/EvilCookieClicker/static/media/irs-logo.04d36760f40c7d2a0dd3.png",
     "index.html": "/EvilCookieClicker/index.html",
-    "main.04fba97e.css.map": "/EvilCookieClicker/static/css/main.04fba97e.css.map",
-    "main.6c7485ff.js.map": "/EvilCookieClicker/static/js/main.6c7485ff.js.map",
+    "main.daa66474.css.map": "/EvilCookieClicker/static/css/main.daa66474.css.map",
+    "main.f45bfd59.js.map": "/EvilCookieClicker/static/js/main.f45bfd59.js.map",
     "787.27b1d532.chunk.js.map": "/EvilCookieClicker/static/js/787.27b1d532.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.04fba97e.css",
-    "static/js/main.6c7485ff.js"
+    "static/css/main.daa66474.css",
+    "static/js/main.f45bfd59.js"
   ]
 }
