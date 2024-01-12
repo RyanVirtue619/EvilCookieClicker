@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import "./App.css";
 import Cookie from "./Cookie";
 import AutoCookie from "./AutoCookie";
@@ -26,9 +26,11 @@ function App() {
 	const [multiBuy, setMultiBuy] = useState(1);
 	const [bet, setBet] = useState(0);
 
+	const betRef = useRef();
+
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setCookies(cookies + cps() / 100);
+			setCookies(cookies + cps / 100);
 			if (taxTimer > 0) {
 				setTaxTimer(taxTimer - 0.01);
 			} else {
@@ -45,13 +47,13 @@ function App() {
 	// 	}
 	// }, [cookies, bet]);
 
-	function cps() {
+	const cps = useMemo(() => {
 		let total = 0;
 		Object.keys(shopItems).forEach((el) => {
 			total += data[el] * shopItems[el][1];
 		});
 		return total;
-	}
+	}, [data]);
 
 	function getPrice(el) {
 		return (
@@ -72,11 +74,30 @@ function App() {
 		}
 	};
 
+	const roll = useCallback((i, j, k) => {
+		console.log("Rolling");
+		setLastWin(
+			Math.max(
+				0,
+				betRef.current.value *
+					(Math.pow(
+						1.003,
+						parseInt(i) * 100 + parseInt(j) * 10 + parseInt(k)
+					) -
+						9.93)
+			)
+		);
+	}, []);
+
+	const castBet = useCallback(() => {
+		setCookies(cookies - bet);
+	}, [bet, cookies, setCookies]);
+
 	return (
 		<div className="App">
 			<IRS taxPerc={taxPercentage} time={taxTimer} />
 
-			<div>{"CPS: " + cps()}</div>
+			<div>{"CPS: " + cps}</div>
 			<Cookie
 				onClick={() => {
 					setCookies(cookies + 1);
@@ -130,6 +151,7 @@ function App() {
 				</div>
 				<div className="bet">
 					<input
+						ref={betRef}
 						type="number"
 						max={cookies}
 						className="multi-buy-num"
@@ -149,27 +171,7 @@ function App() {
 						Last Win: {round(lastWin, 5)}
 					</div>
 				</div>
-				<Spinner
-					onRoll={(i, j, k) => {
-						console.log("Rolled", i, j, k);
-						setLastWin(
-							Math.max(
-								0,
-								bet *
-									(Math.pow(
-										1.003,
-										parseInt(i) * 100 +
-											parseInt(j) * 10 +
-											parseInt(k)
-									) -
-										9.93)
-							)
-						);
-					}}
-					beginRoll={() => {
-						setCookies(cookies - bet);
-					}}
-				/>
+				<Spinner onRoll={roll} beginRoll={castBet} />
 			</div>
 			<button
 				onClick={() => {

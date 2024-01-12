@@ -18,47 +18,27 @@ export default function Spinner(props) {
 		setRolling(false);
 	};
 
+	const propRoll = props.onRoll;
+
 	useEffect(() => {
 		if (!rolling) {
-			props.onRoll(item, item2, item3);
+			return propRoll(item, item2, item3);
 		}
-	});
+	}, [item, item2, item3, rolling, propRoll]);
 
 	return (
 		<>
-			<div>
-				<div className="slot">
-					<section>
-						<div
-							className={
-								"container " + rolling ? "spinning " : ""
-							}
-						>
-							{item}
-						</div>
-					</section>
-				</div>
-				<div className="slot">
-					<section>
-						<div
-							className={
-								"container " + rolling ? "spinning " : ""
-							}
-						>
-							{item2}
-						</div>
-					</section>
-				</div>
-				<div className="slot">
-					<section>
-						<div
-							className={
-								"container " + rolling ? "spinning " : ""
-							}
-						>
-							{item3}
-						</div>
-					</section>
+			<div className="gambler">
+				<div className="bgslot">
+					<div className="slot">
+						<div className={"container"}>{item}</div>
+					</div>
+					<div className="slot">
+						<div className={"container"}>{item2}</div>
+					</div>
+					<div className="slot">
+						<div className={"container"}>{item3}</div>
+					</div>
 				</div>
 			</div>
 
