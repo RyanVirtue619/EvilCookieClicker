@@ -20,6 +20,7 @@ function App() {
 		{ AutoCookie: 0, Grandma: 0, "Cookie Accelerator": 0, "Mr Jaffe": 0 },
 		"data"
 	);
+	const [taxedCookies, setTaxedCookies] = BrowserState(0, "taxed");
 	const [lastWin, setLastWin] = useState(0);
 	const [taxTimer, setTaxTimer] = useState(0);
 	const [taxPercentage, setTaxPercentage] = useState(0);
@@ -35,6 +36,7 @@ function App() {
 				setTaxTimer(taxTimer - 0.01);
 			} else {
 				setTaxTimer(Math.random() * 30 + 30);
+				setTaxedCookies(cookies * taxPercentage);
 				setCookies(cookies * (1 - taxPercentage));
 				setTaxPercentage(Math.random());
 			}
@@ -95,7 +97,7 @@ function App() {
 
 	return (
 		<div className="App">
-			<IRS taxPerc={taxPercentage} time={taxTimer} />
+			<IRS taxPerc={taxPercentage} time={taxTimer} total={taxedCookies} />
 
 			<div>{"CPS: " + cps}</div>
 			<Cookie
@@ -191,6 +193,7 @@ function App() {
 						"Cookie Accelerator": 0,
 						"Mr Jaffe": 0,
 					});
+					setTaxedCookies(0);
 					localStorage.clear();
 				}}
 			>

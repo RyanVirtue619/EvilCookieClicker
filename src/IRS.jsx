@@ -9,6 +9,7 @@ export default function IRS(props) {
 			<img className={"irs-logo"} src={IRSIMG} alt={"IRS LOGO"} />
 			<div>Current Tax Percentage: {round(props.taxPerc * 100, 2)}%</div>
 			<div>Payment due in: {round(props.time, 1)} seconds</div>
+			<div>Total stolen cookies: {round(props.total, 2)}</div>
 		</div>
 	);
 }
