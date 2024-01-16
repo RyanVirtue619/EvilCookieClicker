@@ -24,11 +24,10 @@ function App() {
 	const [lastWin, setLastWin] = useState(0);
 	const [taxTimer, setTaxTimer] = useState(0);
 	const [taxPercentage, setTaxPercentage] = useState(0);
+	const [gaveCookies, setGaveCookies] = useState(0);
 	const [multiBuy, setMultiBuy] = useState(1);
-	const [bet, setBet] = useState(0);
 
 	const betRef = useRef();
-
 	useEffect(() => {
 		const interval = setInterval(() => {
 			setCookies(cookies + cps / 100);
@@ -40,14 +39,18 @@ function App() {
 				setCookies(cookies * (1 - taxPercentage));
 				setTaxPercentage(Math.random());
 			}
+			if (betRef.current.value > cookies)
+				betRef.current.value = round(cookies, 0);
 		}, 10);
 		return () => clearInterval(interval);
 	});
-	// useEffect(() => {
-	// 	if (cookies > bet) {
-	// 		setBet(parseInt(cookies));
-	// 	}
-	// }, [cookies, bet]);
+
+	useEffect(() => {
+		if (gaveCookies === 0) {
+			setCookies(cookies + lastWin);
+			setGaveCookies(1);
+		}
+	}, [cookies, lastWin, gaveCookies, setCookies]);
 
 	const cps = useMemo(() => {
 		let total = 0;
@@ -89,23 +92,12 @@ function App() {
 						9.93)
 			)
 		);
-		setCookies(
-			cookies +
-				Math.max(
-					0,
-					betRef.current.value *
-						(Math.pow(
-							1.003,
-							parseInt(i) * 100 + parseInt(j) * 10 + parseInt(k)
-						) -
-							9.93)
-				)
-		);
+		setGaveCookies(0);
 	}, []);
 
-	const castBet = useCallback(() => {
-		setCookies(cookies - bet);
-	}, [bet, cookies, setCookies]);
+	const castBet = () => {
+		setCookies(Math.max(0, cookies - betRef.current.value));
+	};
 
 	return (
 		<div className="App">
@@ -167,22 +159,20 @@ function App() {
 					<input
 						ref={betRef}
 						type="number"
-						max={cookies}
 						className="multi-buy-num"
 						placeholder={"Enter bet value"}
-						onInput={(e) => {
-							let inp = parseInt(e.target.value);
-							if (inp > cookies) {
-								setBet(cookies);
-							} else {
-								setBet(inp > 0 ? inp : 1);
+						onChange={(e) => {
+							if (e.target.value < 0) {
+								e.target.value = 0;
+							} else if (e.target.value > cookies) {
+								e.target.value = round(cookies, 0);
 							}
 						}}
 					/>
 				</div>
 				<div className="bet">
 					<div className="last-win-ticker">
-						Last Win: {round(lastWin, 5)}
+						Last Win: {round(lastWin, 0)}
 					</div>
 				</div>
 				<Spinner onRoll={roll} beginRoll={castBet} />
@@ -191,7 +181,6 @@ function App() {
 				onClick={() => {
 					console.log("Data", data);
 					console.log("Cookies", cookies);
-					console.log("Bet", bet);
 				}}
 			>
 				log

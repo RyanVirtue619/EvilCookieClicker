@@ -1,12 +1,15 @@
 .irs-logo {
 	width: 50px;
 }
+.irs-text {
+	text-align: left;
+}
 
 .taxation-center {
 	border: 1px solid black;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: left;
 	flex-direction: column;
 	background-color: rgb(229, 229, 229);
 	border-left: 0px solid black;
