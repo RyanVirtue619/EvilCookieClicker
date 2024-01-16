@@ -85,11 +85,10 @@ function App() {
 			Math.max(
 				0,
 				betRef.current.value *
-					(Math.pow(
-						1.003,
-						parseInt(i) * 100 + parseInt(j) * 10 + parseInt(k)
-					) -
-						9.93)
+					Math.pow(
+						1.00773068209,
+						parseInt(i) * 100 + parseInt(j) * 10 + parseInt(k) - 700
+					)
 			)
 		);
 		setGaveCookies(0);
@@ -177,14 +176,7 @@ function App() {
 				</div>
 				<Spinner onRoll={roll} beginRoll={castBet} />
 			</div>
-			<button
-				onClick={() => {
-					console.log("Data", data);
-					console.log("Cookies", cookies);
-				}}
-			>
-				log
-			</button>
+
 			<button
 				onClick={() => {
 					setCookies(0);

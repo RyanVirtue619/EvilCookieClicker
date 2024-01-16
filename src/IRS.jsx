@@ -11,7 +11,7 @@ export default function IRS(props) {
 			<div className="irs-text">
 				Payment due in: {round(props.time, 1)} seconds
 			</div>
-			<div>Total stolen cookies: {round(props.total, 2)}</div>
+			<div>Total stolen cookies: {round(props.total, 0)}</div>
 		</div>
 	);
 }
