@@ -89,6 +89,18 @@ function App() {
 						9.93)
 			)
 		);
+		setCookies(
+			cookies +
+				Math.max(
+					0,
+					betRef.current.value *
+						(Math.pow(
+							1.003,
+							parseInt(i) * 100 + parseInt(j) * 10 + parseInt(k)
+						) -
+							9.93)
+				)
+		);
 	}, []);
 
 	const castBet = useCallback(() => {
