@@ -35,7 +35,7 @@ function App() {
 				setTaxTimer(taxTimer - 0.01);
 			} else {
 				setTaxTimer(Math.random() * 30 + 30);
-				setTaxedCookies(cookies * taxPercentage);
+				setTaxedCookies(taxedCookies + cookies * taxPercentage);
 				setCookies(cookies * (1 - taxPercentage));
 				setTaxPercentage(Math.random());
 			}
@@ -93,6 +93,10 @@ function App() {
 		);
 		setGaveCookies(0);
 	}, []);
+
+	const logger = () => {
+		console.table(localStorage);
+	};
 
 	const castBet = () => {
 		setCookies(Math.max(0, cookies - betRef.current.value));
@@ -176,7 +180,7 @@ function App() {
 				</div>
 				<Spinner onRoll={roll} beginRoll={castBet} />
 			</div>
-
+			<button onClick={logger}>LOG EVERYTHING</button>
 			<button
 				onClick={() => {
 					setCookies(0);
